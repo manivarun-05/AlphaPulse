@@ -1,0 +1,144 @@
+/* Dashboard.css */
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+    animation: fadeIn 0.5s cubic-bezier(0.2, 0, 0, 1);
+    max-width: 1600px;
+    /* Prevent it from getting too wide on huge screens */
+    margin: 0 auto;
+}
+
+.dashboard__header {
+    margin-bottom: 8px;
+}
+
+.dashboard__greeting {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.dashboard__wave {
+    font-size: 28px;
+    animation: wave 2.5s ease-in-out infinite;
+    transform-origin: 70% 70%;
+    display: inline-block;
+}
+
+.dashboard__time {
+    font-size: 14px;
+    color: var(--primary-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.dashboard__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    /* Larger, bolder title */
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0 0 8px 0;
+    background: linear-gradient(135deg, white 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dashboard__subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+/* Fluid Grid for Stats */
+.dashboard__stats {
+    display: grid;
+    /* This is the magic: auto-fit with minmax. 
+       If sidebar collapses, more space -> cards might widen or 4th card could fit if there was one. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+/* Dashboard Layout: Main Content vs Sidebar Content */
+.dashboard__content {
+    display: grid;
+    /* Sidebar closed: Main content expands. Mobile: Stacks. */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    align-items: start;
+}
+
+/* If screen is wide enough, prioritize main content taking more space */
+@media (min-width: 1200px) {
+    .dashboard__content {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.dashboard__main,
+.dashboard__side {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+    /* Prevents overflow in grid items */
+}
+
+/* Mobile & Tablet adjustments */
+@media (max-width: 768px) {
+    .dashboard__stats {
+        grid-template-columns: 1fr;
+        /* Stack on mobile */
+    }
+
+    .dashboard__content {
+        grid-template-columns: 1fr;
+        /* Stack content areas */
+    }
+}
+
+@keyframes wave {
+
+    0%,
+    60%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    10%,
+    30% {
+        transform: rotate(14deg);
+    }
+
+    20% {
+        transform: rotate(-8deg);
+    }
+
+    40% {
+        transform: rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

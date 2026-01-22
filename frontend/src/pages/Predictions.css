@@ -1,0 +1,347 @@
+/* Predictions.css */
+.predictions {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    animation: fadeIn 0.4s ease-out;
+    padding: 20px;
+    background-color: transparent;
+    /* Ensure it doesn't block the dark body bg, or set explicit if needed */
+    /* Force text color to be safe */
+    color: var(--text-main);
+}
+
+/* Ensure container itself doesn't cause white background issues */
+.predictions * {
+    box-sizing: border-box;
+}
+
+.predictions__header {
+    margin-bottom: 8px;
+}
+
+.predictions__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.predictions__title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    background: linear-gradient(135deg, var(--text-main) 0%, var(--text-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--text-main);
+    /* Fallback */
+}
+
+.predictions__subtitle {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.predictions__selector {
+    background: linear-gradient(135deg, var(--bg-card-solid) 0%, rgba(21, 26, 35, 0.6) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+    /* Explicit text color */
+    color: var(--text-main);
+}
+
+.predictions__selector-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.predictions__symbols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.predictions__symbol-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-hover);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 16px 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-main);
+}
+
+.predictions__symbol-btn:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    background: var(--bg-card);
+}
+
+.predictions__symbol-btn--active {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px var(--primary-glow);
+    color: white;
+}
+
+.predictions__symbol-icon {
+    font-size: 24px;
+}
+
+.predictions__symbol-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.predictions__refresh-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.predictions__refresh-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px var(--primary-glow);
+}
+
+.predictions__refresh-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.predictions__spin {
+    animation: spin 1s linear infinite;
+}
+
+.predictions__error {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--danger-glow);
+    color: var(--danger);
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--danger);
+    font-size: 14px;
+}
+
+/* Predictions Result Card styles should be in here if not inline, 
+   but they were in jsx as styled component block. 
+   I will add them here to be safe and clean. */
+
+.predictions__result-card {
+    background: linear-gradient(135deg, var(--bg-card-solid) 0%, rgba(21, 26, 35, 0.8) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+    color: var(--text-main);
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 16px;
+}
+
+.result-symbol {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.result-date {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+}
+
+.result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.result-label {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.result-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.result-item.highlight .result-value {
+    color: var(--primary-light);
+    text-shadow: 0 0 20px var(--primary-glow);
+}
+
+.result-value.positive {
+    color: var(--success);
+}
+
+.result-value.negative {
+    color: var(--danger);
+}
+
+.result-badge {
+    display: inline-flex;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.result-badge.bullish {
+    background: var(--success-glow);
+    color: var(--success);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.result-badge.bearish {
+    background: var(--danger-glow);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.result-badge.neutral {
+    background: rgba(156, 163, 175, 0.1);
+    color: var(--text-muted);
+}
+
+.predictions__models {
+    background: linear-gradient(135deg, var(--bg-card-solid) 0%, rgba(21, 26, 35, 0.6) 100%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    color: var(--text-main);
+}
+
+.predictions__models-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+}
+
+.predictions__models-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.predictions__model-card {
+    background: var(--bg-hover);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.predictions__model-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 12px;
+}
+
+.predictions__model-icon--lstm {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+    color: var(--primary-light);
+}
+
+.predictions__model-icon--xgb {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.1) 100%);
+    color: var(--success);
+}
+
+.predictions__model-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.predictions__model-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .predictions {
+        gap: 16px;
+    }
+
+    .predictions__selector,
+    .predictions__result,
+    /* updated class name just in case */
+    .predictions__result-card,
+    .predictions__models {
+        padding: 16px;
+    }
+
+    .predictions__symbol-btn {
+        padding: 12px 16px;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

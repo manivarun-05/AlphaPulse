@@ -1,0 +1,117 @@
+/* StockModal.css */
+.stock-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.stock-modal {
+    background: var(--bg-card-solid);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 800px;
+    padding: 24px;
+    position: relative;
+    animation: slideUp 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.stock-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+
+.stock-modal__title {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, white 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stock-modal__subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.stock-modal__close {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stock-modal__close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.stock-modal__content {
+    height: 400px;
+    /* Fixed height for chart */
+    position: relative;
+    width: 100%;
+}
+
+.stock-modal__chart-container {
+    height: 100%;
+    width: 100%;
+}
+
+.stock-modal__loading,
+.stock-modal__error {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    gap: 16px;
+    font-weight: 500;
+}
+
+.stock-modal__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(99, 102, 241, 0.3);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.stock-modal__error i {
+    font-size: 32px;
+    color: var(--danger);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
