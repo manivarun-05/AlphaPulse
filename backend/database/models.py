@@ -7,6 +7,8 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
+    name = Column(String, default="Alpha Trader")
+    bio = Column(String, default="Stock market enthusiast")
 
 class Portfolio(Base):
     __tablename__ = "portfolios"

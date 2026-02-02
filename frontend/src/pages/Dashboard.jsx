@@ -9,6 +9,32 @@ const Dashboard = () => {
   const [portfolio, setPortfolio] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const quotes = [
+    "The best time to plant a tree was 20 years ago. The second best time is now.",
+    "In investing, what is comfortable is rarely profitable.",
+    "Be fearful when others are greedy and greedy when others are fearful.",
+    "The stock market is a device for transferring money from the impatient to the patient.",
+    "Know what you own, and know why you own it.",
+    "Investing should be more like watching paint dry or watching grass grow.",
+    "Don't look for the needle in the haystack. Just buy the haystack.",
+    "An investment in knowledge pays the best interest.",
+    "The individual investor should act consistently as an investor and not as a speculator.",
+    "Buy when everyone else is selling and hold until everyone else is buying."
+  ];
+
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
+
+  useEffect(() => {
+    // Randomize initial quote
+    setCurrentQuoteIndex(Math.floor(Math.random() * quotes.length));
+
+    const quoteInterval = setInterval(() => {
+      setCurrentQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+    }, 60000); // 1 minute
+
+    return () => clearInterval(quoteInterval);
+  }, []);
+
   const moversData = [
     { symbol: 'AAPL', name: 'Apple Inc.', price: 178.50, change: 2.15 },
     { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 182.23, change: 0.90 },
@@ -36,9 +62,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <header className="dashboard__header">
-        <div className="dashboard__greeting">
-          <span className="dashboard__wave">👋</span>
-          <span className="dashboard__time">Good {getTimeOfDay()}</span>
+        <div className="dashboard__quote-container">
+          <i className="bi bi-lightning-charge-fill dashboard__quote-icon"></i>
+          <span className="dashboard__quote-text">{quotes[currentQuoteIndex]}</span>
         </div>
         <h1 className="dashboard__title">Dashboard</h1>
         <p className="dashboard__subtitle">Welcome back, here is your market overview.</p>

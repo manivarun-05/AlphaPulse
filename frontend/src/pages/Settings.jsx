@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './Settings.css';
+import { useAuth } from '../components/AuthContext';
 
 const Settings = () => {
+    const { user, updateUser, logout } = useAuth();
     const [activeTab, setActiveTab] = useState('profile');
 
     // Profile State
     const [profile, setProfile] = useState({
-        name: localStorage.getItem('user_name') || 'Manivarun',
-        email: 'manivarun@alphapulse.com',
-        bio: 'Quantitative day trader based in New York. Focusing on tech and energy sectors.'
+        name: user?.name || '',
+        email: user?.email || '',
+        bio: user?.bio || ''
     });
+
+    useEffect(() => {
+        if (user) {
+            setProfile({
+                name: user.name || '',
+                email: user.email || '',
+                bio: user.bio || ''
+            });
+        }
+    }, [user]);
 
     // Password State
     const [isChangingPassword, setIsChangingPassword] = useState(false);
@@ -31,13 +43,18 @@ const Settings = () => {
         setProfile(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSaveProfile = (e) => {
+    const handleSaveProfile = async (e) => {
         e.preventDefault();
-        // Simulate API call
-        localStorage.setItem('user_name', profile.name); // Persist name
-        alert("Success! Your profile has been updated.");
-        // Consider dispatching an event if Sidebar needs to update instantly, 
-        // but for now a reload or nav change will pick it up if Sidebar reads from LS.
+        try {
+            await updateUser({
+                name: profile.name,
+                email: profile.email,
+                bio: profile.bio
+            });
+            alert("Success! Your profile has been updated.");
+        } catch (error) {
+            alert("Failed to update profile: " + (error.response?.data?.detail || error.message));
+        }
     };
 
     const handlePasswordChange = (e) => {

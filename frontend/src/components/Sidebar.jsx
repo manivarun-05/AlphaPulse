@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 import './Sidebar.css';
 
 const Sidebar = ({ isCollapsed, onToggle, isMobileOpen, onMobileClose }) => {
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
 
     const handleLogout = (e) => {
         e.stopPropagation();
         if (window.confirm("Are you sure you want to logout?")) {
-            window.location.reload(); // Simulate logout
+            logout();
+            navigate('/login');
         }
     };
 
@@ -27,11 +30,14 @@ const Sidebar = ({ isCollapsed, onToggle, isMobileOpen, onMobileClose }) => {
             </button>
 
             {/* Logo */}
-            <div className="sidebar__logo">
+            <div className="sidebar__logo" onClick={() => navigate('/')}>
                 <div className="sidebar__logo-icon">
-                    <span>α</span>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 13.5L7 13.5L9 5L13 19L15 13.5L21 13.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="21" cy="13.5" r="1.5" fill="currentColor" />
+                    </svg>
                 </div>
-                <span className="sidebar__logo-text">AlphaPulse</span>
+                <span className="sidebar__logo-text">Alpha<span className="text-highlight">Pulse</span></span>
             </div>
 
             {/* Navigation */}
@@ -62,11 +68,11 @@ const Sidebar = ({ isCollapsed, onToggle, isMobileOpen, onMobileClose }) => {
             <div className="sidebar__footer">
                 <div className="sidebar__user" onClick={() => navigate('/settings')} title="Go to Settings">
                     <div className="sidebar__user-avatar">
-                        <span>M</span>
+                        <span>{user?.name?.charAt(0) || 'A'}</span>
                     </div>
                     <div className="sidebar__user-info">
-                        <span className="sidebar__user-name">Manivarun</span>
-                        <span className="sidebar__user-email">Pro Trader</span>
+                        <span className="sidebar__user-name">{user?.name || 'Alpha Trader'}</span>
+                        <span className="sidebar__user-email">{user?.email || 'User'}</span>
                     </div>
                     <button className="sidebar__logout" aria-label="Logout" onClick={handleLogout}>
                         <i className="bi bi-box-arrow-right"></i>

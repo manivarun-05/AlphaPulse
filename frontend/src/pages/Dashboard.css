@@ -11,51 +11,57 @@
 }
 
 .dashboard__header {
-    margin-bottom: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--glass-border);
 }
 
-.dashboard__greeting {
+.dashboard__quote-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
+    gap: 12px;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, transparent 100%);
+    padding: 8px 16px;
+    border-radius: 12px;
+    border-left: 3px solid var(--primary);
+    max-width: fit-content;
+    animation: fadeIn 0.6s ease-out;
 }
 
-.dashboard__wave {
-    font-size: 28px;
-    animation: wave 2.5s ease-in-out infinite;
-    transform-origin: 70% 70%;
-    display: inline-block;
-}
-
-.dashboard__time {
-    font-size: 14px;
+.dashboard__quote-icon {
+    font-size: 18px;
     color: var(--primary-light);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: rgba(99, 102, 241, 0.1);
-    padding: 4px 12px;
-    border-radius: 20px;
+    filter: drop-shadow(0 0 5px var(--primary-glow));
+}
+
+.dashboard__quote-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0.2px;
 }
 
 .dashboard__title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    /* Larger, bolder title */
-    font-weight: 800;
-    letter-spacing: -1px;
-    margin: 0 0 8px 0;
-    background: linear-gradient(135deg, white 0%, #94a3b8 100%);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin: 8px 0;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
 }
 
 .dashboard__subtitle {
-    font-size: 1.1rem;
-    color: var(--text-muted);
+    font-size: 1.2rem;
+    color: var(--text-secondary);
     margin: 0;
-    max-width: 600px;
-    line-height: 1.5;
+    max-width: 700px;
+    line-height: 1.6;
+    font-weight: 400;
 }
 
 /* Fluid Grid for Stats */

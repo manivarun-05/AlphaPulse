@@ -1,16 +1,63 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from jose import JWTError, jwt
 
 from database import models, schemas
-from database.deps import get_db   # ✅ MISSING IMPORT (IMPORTANT)
-
+from database.deps import get_db
 from auth.security import hash_password, verify_password
-from auth.jwt import create_access_token
+from auth.jwt import create_access_token, SECRET_KEY, ALGORITHM
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
+
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    
+    user = db.query(models.User).filter(models.User.email == email).first()
+    if user is None:
+        raise credentials_exception
+    return user
 
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"]
 )
+
+@router.get("/me", response_model=schemas.User)
+def get_me(current_user: models.User = Depends(get_current_user)):
+    return current_user
+
+@router.put("/me", response_model=schemas.User)
+def update_me(
+    user_update: schemas.UserUpdate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    if user_update.name is not None:
+        current_user.name = user_update.name
+    if user_update.bio is not None:
+        current_user.bio = user_update.bio
+    if user_update.email is not None:
+        # Check if email is already taken
+        existing_user = db.query(models.User).filter(models.User.email == user_update.email).first()
+        if existing_user and existing_user.id != current_user.id:
+            raise HTTPException(status_code=400, detail="Email already in use")
+        current_user.email = user_update.email
+    
+    db.commit()
+    db.refresh(current_user)
+    return current_user
 
 @router.post("/register")
 def register(
