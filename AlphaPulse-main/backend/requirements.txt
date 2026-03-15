@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic[email]
+python-jose[cryptography]
+bcrypt
+python-multipart
+requests
+tensorflow
+pandas
+scikit-learn
+joblib
+xgboost
+yfinance
+psycopg2-binary
+python-dotenv
